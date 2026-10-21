@@ -15,3 +15,5 @@ Chromium 1180×714／320×800（模擬觸控）完成開始按鈕／inert防誤�
 核心salon-model／salon-voice／salon.css／speech／sounds、音檔映射與原檔雜湊核對相同；salon.js及salon-art.js只去掉原發布query，另將執行期人像切換至V4。Panda School Git工作樹保持乾淨、原324項回歸通過。
 
 asset-manifest.json為資源完整性清單，不代表離線快取。未宣稱實體iPad／Safari、揚聲器主觀聽感或關閉伺服器後離線遊玩。
+
+0.2.0公開版重新執行40項Node測試及`npm run check`，全部通過；資源清單仍為25個瀏覽器資源與11段WAV。GitHub Pages建置成功，公開網址https://kfed0526.github.io/cut-hair/可載入。實際部署頁以1180×714及320×800瀏覽器viewport檢查：V4長髮角色成功載入、短髮圖naturalWidth為900、手機版scrollWidth等於clientWidth，未見水平溢出。這是瀏覽器模擬尺寸驗證，不是實體裝置驗證。

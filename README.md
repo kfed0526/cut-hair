@@ -2,6 +2,8 @@
 
 從 Panda School `20261021.v2` 複製的獨立剪髮遊戲。開啟就能幫 Nickson 剪頭髮，不需原專案、課本、小鎮地圖、帳號或網路語音服務，不受原理髮店營業時間限制。
 
+線上版本：<https://kfed0526.github.io/cut-hair/>
+
 ## 開始玩
 
 需要 Node.js 20 以上，不需 `npm install`。
@@ -36,3 +38,5 @@ node scripts/asset-manifest.mjs
 原遊戲核心是 salon.js、salon-model.js、salon-art.js、salon-voice.js、salon.css；speech.js／sounds.js沿用原共用音訊實作。app.js／settings.js／style.css為獨立入口與設定，server.mjs從自己的資料夾提供檔案。來源與差異見SOURCE.json，素材完整提示在assets/salon.prompts.json。
 
 公開版使用兩張V4繪本角色PNG來源與WebP，刻意簡化五官、膚質及髮絲以降低真人辨識度；V3衍生圖只留在本機並由`.gitignore`排除，提示則保留作來源紀錄，兩者都不進入瀏覽器資源清單。原始私人JPG、舊V1／V2圖片、其他場景、教材、相簿、瀏覽器紀錄與家長PIN均未複製。
+
+原始碼公開於 <https://github.com/kfed0526/cut-hair>，GitHub Pages 從 `main` 分支根目錄發佈。

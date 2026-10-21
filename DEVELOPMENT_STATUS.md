@@ -6,4 +6,4 @@
 
 40項Node測試及資源完整性檢查通過。Chromium 1180×714／320×800完成原生點選／拖曳、剪短／比較／長回來、梳頭／吹風、鍵盤、語音／靜音、背景／離場取消、設定保存與隔離，以及兩人像載入重試、autoplay受阻重試；沒有水平溢出或外部請求。
 
-來源Panda School檔案保留不變，324項原回歸曾通過；本專案是可獨立修改的實體副本，不是捷徑或符號連結。資源與原始碼來源見SOURCE.json。公開發布與最新驗證結果見VALIDATION.md。
+公開 repository 為 https://github.com/kfed0526/cut-hair，GitHub Pages 為 https://kfed0526.github.io/cut-hair/。來源Panda School檔案保留不變，324項原回歸曾通過；本專案是可獨立修改的實體副本，不是捷徑或符號連結。資源與原始碼來源見SOURCE.json。最新驗證結果見VALIDATION.md。
