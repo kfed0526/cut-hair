@@ -1,0 +1,17 @@
+{
+  "language": "zh-TW",
+  "source": "Microsoft Hanhan Desktop，Rate=-1；開發時產生的中文合成語音，非真人錄音。",
+  "audio": {
+    "鏡子裡是 Nickson！選剪刀，剪遊戲裡的頭髮。": "assets/audio/salon/c7e783075dd32e56.wav",
+    "真的剪刀，要請大人幫忙。": "assets/audio/salon/5604ead5b553bf00.wav",
+    "碰一碰頭髮，或慢慢拖動剪刀。": "assets/audio/salon/75eee598303a7053.wav",
+    "拿梳子，幫頭髮梳一梳。": "assets/audio/salon/7e56243a1d681b6c.wav",
+    "拿吹風機，吹一吹頭髮。": "assets/audio/salon/fb60a6d3f6133b4a.wav",
+    "喀嚓！頭髮變短了。": "assets/audio/salon/9b290cce5ed30319.wav",
+    "頭髮長回來了，再剪一次吧！": "assets/audio/salon/8c6313dc5dcda17e.wav",
+    "造型完成！這就是你的小小理髮店。": "assets/audio/salon/2588d1619bd68e1a.wav",
+    "這是剪頭髮之前的樣子。": "assets/audio/salon/5507a71754cd2525.wav",
+    "這是你剪好的樣子。": "assets/audio/salon/6ed53bc7ae3eea0c.wav",
+    "準備好了，我們繼續玩。": "assets/audio/salon/6d1354faab54e3e1.wav"
+  }
+}

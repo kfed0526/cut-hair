@@ -1,0 +1,7 @@
+import fs from 'node:fs';import path from 'node:path';import {fileURLToPath} from 'node:url';import assert from 'node:assert/strict';import {createHash} from 'node:crypto';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..'),manifest=JSON.parse(fs.readFileSync(path.join(root,'asset-manifest.json')));
+for(const file of manifest.files){assert.ok(!file.url.includes('..'));const data=fs.readFileSync(path.join(root,file.url));assert.equal(data.length,file.bytes,file.url);assert.equal(createHash('sha256').update(data).digest('hex'),file.sha256,file.url);}
+for(const file of fs.readdirSync(root).filter(f=>f.endsWith('.js'))){const code=fs.readFileSync(path.join(root,file),'utf8');for(const match of code.matchAll(/\bfrom\s+['"]([^'"]+)['"]/g)){assert.ok(match[1].startsWith('./')&&!match[1].includes('..'),file+' local dependency');assert.ok(fs.existsSync(path.join(root,match[1].split('?')[0])),file+' → '+match[1]);}}
+const mapping=JSON.parse(fs.readFileSync(path.join(root,'content/salon-audio.json'))).audio;assert.equal(Object.keys(mapping).length,11);for(const clip of Object.values(mapping))assert.ok(manifest.files.some(f=>f.url===clip));
+for(const file of ['AGENTS.md','README.md','START_HERE.md','DEVELOPMENT_STATUS.md','VALIDATION.md','SOURCE.json','server.mjs'])assert.ok(fs.existsSync(path.join(root,file)),file);
+console.log(`OK cut-hair: ${manifest.files.length} verified local browser assets; 11 WAV clips; no Panda School runtime dependency.`);

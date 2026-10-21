@@ -1,0 +1,12 @@
+{
+  "name": "cut-hair",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test tests/salon.test.mjs tests/speech.test.mjs tests/sounds.test.mjs tests/standalone.test.mjs",
+    "check": "node scripts/check.mjs"
+  },
+  "engines": {"node": ">=20"}
+}

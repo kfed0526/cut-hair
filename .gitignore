@@ -1,0 +1,8 @@
+node_modules/
+.local-assets/
+*.log
+.DS_Store
+assets/characters/nickson-salon-ghibli-v3.png
+assets/characters/nickson-salon-ghibli-v3.webp
+assets/characters/nickson-salon-ghibli-short-v3.png
+assets/characters/nickson-salon-ghibli-short-v3.webp

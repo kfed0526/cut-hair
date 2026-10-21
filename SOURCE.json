@@ -1,0 +1,12 @@
+{
+  "sourceProject": "panda-school",
+  "sourceCommit": "71c56caf661617d64d667550f26ec1df25dc4862",
+  "sourceRelease": "20261021.v2",
+  "copiedAt": "2026-10-21",
+  "modules": ["salon.js", "salon-model.js", "salon-art.js", "salon-voice.js", "salon.css", "speech.js", "sounds.js"],
+  "moduleChanges": "Only remove Panda School release query strings from salon.js and salon-art.js imports. Gameplay remains copied as-is. app.js, settings.js, style.css and server.mjs are standalone glue; tests adapt old whole-site asset assertions.",
+  "runtimePortraits": ["assets/characters/nickson-salon-storybook-v4.webp", "assets/characters/nickson-salon-storybook-short-v4.webp"],
+  "notCopied": ["Panda School .git and release/deployment machinery", "Original private JPGs and V1/V2 portrait variants", "School textbooks, other scenes and photo albums", "Browser learning records, parent PINs and preferences"],
+  "audio": "11 original local Microsoft Hanhan Desktop Rate=-1 synthesized WAVs, unchanged; not a cloned human voice.",
+  "notes": "V4 runtime portraits are deliberately fictionalized storybook characters with reduced photographic and identifying detail. V3 source assets and all generation prompts remain for provenance; no image generation occurs at runtime."
+}

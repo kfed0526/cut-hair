@@ -1,0 +1,132 @@
+{
+  "name": "cut-hair",
+  "version": "0.2.0",
+  "totalBytes": 2242859,
+  "files": [
+    {
+      "url": "app.js",
+      "bytes": 3577,
+      "sha256": "0356274b18c8f31b65459b8f90a099c2af3c2aeb4693d594c61666fae36c7dc2"
+    },
+    {
+      "url": "assets/audio/salon/2588d1619bd68e1a.wav",
+      "bytes": 234200,
+      "sha256": "c0d237baecffa30fa3a3b2abd76a225faed66f7e74df4f7766844a62c477349a"
+    },
+    {
+      "url": "assets/audio/salon/5507a71754cd2525.wav",
+      "bytes": 147320,
+      "sha256": "52e562e49cbb054c121c0104fed3829a7fd62638acab116b58e4180bd2a5a6ef"
+    },
+    {
+      "url": "assets/audio/salon/5604ead5b553bf00.wav",
+      "bytes": 162392,
+      "sha256": "60f7f6231b1c6aa9a8f4c8e8fc8adbf27efd221d26371bc2d80d03ff44b016ab"
+    },
+    {
+      "url": "assets/audio/salon/6d1354faab54e3e1.wav",
+      "bytes": 146936,
+      "sha256": "eb69b01fef9b67e515fbfbc73875aa60e89c15d40335ef5b6c995aac2043d39d"
+    },
+    {
+      "url": "assets/audio/salon/6ed53bc7ae3eea0c.wav",
+      "bytes": 122766,
+      "sha256": "e1aa8478d6475f74b070f3384f049c1072927dedaafd36e9300937e9c59019b8"
+    },
+    {
+      "url": "assets/audio/salon/75eee598303a7053.wav",
+      "bytes": 185564,
+      "sha256": "756eedee0dcdc15d1027489dfcfdeb04e3e3cb5dbb69c07d84db22bfb3058948"
+    },
+    {
+      "url": "assets/audio/salon/7e56243a1d681b6c.wav",
+      "bytes": 154246,
+      "sha256": "3a17611beb896f00e2ba8e4b297d56d618a750f90ff86434465ddf520ca6aae3"
+    },
+    {
+      "url": "assets/audio/salon/8c6313dc5dcda17e.wav",
+      "bytes": 178030,
+      "sha256": "6250b86b3dbe984be24abf8bf13aa27ca45898416c3e426e62982dfb0b608fad"
+    },
+    {
+      "url": "assets/audio/salon/9b290cce5ed30319.wav",
+      "bytes": 159328,
+      "sha256": "e95cde77f39558072ebd8c52a5b4aba3b3fc0d4b46c08ccd34b6a4233b5876e5"
+    },
+    {
+      "url": "assets/audio/salon/c7e783075dd32e56.wav",
+      "bytes": 274222,
+      "sha256": "fd3dde8f68aec353e645ee62af07e53e8c82a9fc89f74c7d84764655c700a241"
+    },
+    {
+      "url": "assets/audio/salon/fb60a6d3f6133b4a.wav",
+      "bytes": 149116,
+      "sha256": "311cfd6923619af31431a75aca28e0ef4380f5d4ac342b82d1a5cbeeb2d07a8c"
+    },
+    {
+      "url": "assets/characters/nickson-salon-storybook-short-v4.webp",
+      "bytes": 113084,
+      "sha256": "3add41a690e43fb99015c9dc1692aaf937e92a489c64e0fe29010732d57dc603"
+    },
+    {
+      "url": "assets/characters/nickson-salon-storybook-v4.webp",
+      "bytes": 157616,
+      "sha256": "1f7ee4de961800b3b5350aa5d8dc514f157e8ff2b6f64c95346f16d745967944"
+    },
+    {
+      "url": "content/salon-audio.json",
+      "bytes": 1124,
+      "sha256": "d645320203fbab9b86c2f7a37fc58d42422d715285b78fe274a14fa62efb8b27"
+    },
+    {
+      "url": "index.html",
+      "bytes": 2410,
+      "sha256": "45c6deb22b712980ec759f873a753683b1e3450cd5dc33fb895263065dfe90b0"
+    },
+    {
+      "url": "salon-art.js",
+      "bytes": 3443,
+      "sha256": "d8f6b515fd98652da0e14f52d14383fc765b5b56efe8e206af7c7983d405180e"
+    },
+    {
+      "url": "salon-model.js",
+      "bytes": 3656,
+      "sha256": "0ebd8d9992a2052fe62949b6525be50a6ec18a7d5f1612cf1c6bd22a06efff6c"
+    },
+    {
+      "url": "salon-voice.js",
+      "bytes": 771,
+      "sha256": "658b4d2bcc26fb13621862b72898bc64c8797129d6fcc00a01143acc0670429e"
+    },
+    {
+      "url": "salon.css",
+      "bytes": 10700,
+      "sha256": "36b7be885db1edf87d7449e8536c3789c11e8774f1200a2202877392cdbe2c9d"
+    },
+    {
+      "url": "salon.js",
+      "bytes": 16779,
+      "sha256": "2e2d448b024a2edf59a7c70e62cc57602af8ab942e25a4f8c613a354b235d976"
+    },
+    {
+      "url": "settings.js",
+      "bytes": 912,
+      "sha256": "5b41f681f14d681ac61c474ee884b83fdf5527b5d53fdecab0cc7a4fff0052f5"
+    },
+    {
+      "url": "sounds.js",
+      "bytes": 6442,
+      "sha256": "4342153cc0a8c2797ac726272190077f4085abc786b76feaa42dd1bf5870f767"
+    },
+    {
+      "url": "speech.js",
+      "bytes": 5575,
+      "sha256": "b9e85929dd1d2e75a575a859c47656a7f3e60f411850dae80d475f0a162f188b"
+    },
+    {
+      "url": "style.css",
+      "bytes": 2650,
+      "sha256": "c81f5dca3b3fa82bf2b23b2c78d1a35ab99b6888ba94dada6e66896df42cab6a"
+    }
+  ]
+}
