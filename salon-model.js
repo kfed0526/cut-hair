@@ -1,6 +1,6 @@
 // Salon progress is pretend play, kept only in this page visit. No photo or learning-record writes.
 export const SALON_SIZE={width:600,height:800};
-export const SALON_TOOLS=['scissors','comb','dryer'];
+export const SALON_TOOLS=['scissors','comb','shampoo','dryer'];
 export const SALON_ZONES=['left','fringe','right'];
 export const SALON_STYLES=['blunt','side-part','asymmetric','fluffy-short'];
 export const SALON_CHARACTER_IDS=['nickson','cat','dog','monkey'];
@@ -46,12 +46,14 @@ export function nearestHairPoint(lock,x,y,state={}){
 export class SalonVisit{
  constructor({taskStyle='',character='nickson'}={}){this.taskStyle=SALON_STYLES.includes(taskStyle)?taskStyle:'';this.character=SALON_CHARACTER_IDS.includes(character)?character:'nickson';this.reset();}
  get trimmed(){return this.hair.filter(lock=>lock.length<1).length;}
+ get washedCount(){return SALON_ZONES.filter(zone=>this.washed[zone]).length;}
+ get damp(){return SALON_ZONES.some(zone=>this.wet[zone]);}
  get canFinish(){return this.trimmed>0&&!this.paused&&!this.before&&!this.done;}
  get editable(){return !this.paused&&!this.before&&!this.done;}
  get taskReady(){return Boolean(this.taskStyle)&&this.style===this.taskStyle&&!this.done;}
  get taskComplete(){return Boolean(this.taskStyle)&&this.style===this.taskStyle&&this.done;}
  selectCharacter(character){if(!this.editable||!SALON_CHARACTER_IDS.includes(character)||this.character===character)return false;this.character=character;return this.reset();}
- reset(){if(this.paused)return false;this.hair=createHair();this.tool='scissors';this.style='';this.comb=0;this.blown=false;this.done=false;this.before=false;this.paused=false;return true;}
+ reset(){if(this.paused)return false;this.hair=createHair();this.tool='scissors';this.style='';this.comb=0;this.blown=false;this.washed={left:false,fringe:false,right:false};this.wet={left:false,fringe:false,right:false};this.done=false;this.before=false;this.paused=false;return true;}
  selectTool(tool){if(!this.editable||!SALON_TOOLS.includes(tool)||this.tool===tool)return false;this.tool=tool;return true;}
  cutAt(x,y,radius=23){
   if(!this.editable||this.tool!=='scissors'||![x,y,radius].every(Number.isFinite)||radius<0)return [];
@@ -61,9 +63,10 @@ export class SalonVisit{
  }
  useAt(x,y,dx=0){
   if(!this.editable||![x,y,dx].every(Number.isFinite))return false;
-  if(!this.hair.some(lock=>nearestHairPoint(lock,x,y,this).distance<40))return false;
+  let nearest={lock:null,distance:Infinity};for(const lock of this.hair){const distance=nearestHairPoint(lock,x,y,this).distance;if(distance<nearest.distance)nearest={lock,distance};}if(nearest.distance>=40)return false;
   if(this.tool==='comb'){const direction=Math.abs(dx)<2?(x<300?-1:1):Math.sign(dx);if(this.comb===direction)return false;this.comb=direction;this.style='';return true;}
-  if(this.tool==='dryer'){if(this.blown)return false;this.blown=true;this.style='';return true;}
+  if(this.tool==='shampoo'){const zone=nearest.lock.zone;this.washed[zone]=true;this.wet[zone]=true;this.blown=false;return true;}
+  if(this.tool==='dryer'){const zone=nearest.lock.zone;this.wet[zone]=false;this.blown=true;this.style='';return true;}
   return false;
  }
  applyZone(zone){
@@ -74,7 +77,7 @@ export class SalonVisit{
  }
  applyStyle(style){
   if(!this.editable||!SALON_STYLES.includes(style))return [];
-  this.style=style;this.comb=['side-part','asymmetric'].includes(style)?1:0;this.blown=style==='fluffy-short';
+  this.style=style;this.comb=['side-part','asymmetric'].includes(style)?1:0;this.blown=style==='fluffy-short';if(this.blown)for(const zone of SALON_ZONES)this.wet[zone]=false;
   const fringe=this.hair.filter(lock=>lock.zone==='fringe'),changed=[];
   for(const lock of this.hair){const from=lock.length,index=fringe.indexOf(lock),to=styleLength(style,lock,index,fringe.length);if(Math.abs(from-to)>.001){lock.length=to;changed.push({id:lock.id,point:hairPoint(lock,to,this),from,to});}}
   return changed;

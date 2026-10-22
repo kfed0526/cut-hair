@@ -98,12 +98,13 @@ export class GameSounds {
   }
 
   salon(tool) {
-    if (!this.ready() || !['scissors','comb','dryer','finish'].includes(tool)) return false;
+    if (!this.ready() || !['scissors','comb','shampoo','dryer','finish'].includes(tool)) return false;
     try {
       if (this.nodes.size > 36) this.stop();
       if (tool === 'finish') { this.tone(659,0,.18,.1);this.tone(880,.12,.22,.1); }
       else if (tool === 'scissors') { this.clap(0,.055);this.tone(1800,.025,.055,.025,'triangle',850); }
       else if (tool === 'comb') this.clap(0,.025);
+      else if (tool === 'shampoo') { this.tone(520,0,.12,.035,'sine',760);this.tone(740,.08,.14,.025,'sine',980);this.clap(.03,.015); }
       else { this.clap(0,.022);this.clap(.08,.018); }
       return true;
     } catch { this.stop();return false; }

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {SalonVisit,createHair,hairPoint,MIN_HAIR_LENGTH,SALON_STYLES,SALON_CHARACTER_IDS,salonTaskForDate} from '../salon-model.js';
+import {SalonVisit,createHair,hairPoint,MIN_HAIR_LENGTH,SALON_TOOLS,SALON_STYLES,SALON_CHARACTER_IDS,salonTaskForDate} from '../salon-model.js';
 import {SalonSession,salonHTML,SALON_PORTRAIT,SALON_SHORT_PORTRAIT} from '../salon.js';
 import {SALON_CHARACTERS,salonCharacter,salonCharacterText} from '../salon-characters.js';
 import {SALON_CUES,salonVoiceTexts,salonCue} from '../salon-voice.js';
@@ -100,7 +100,16 @@ test('reapplying a preset repaints when only its styling state needs restoring',
 });
 test('comb and dryer affect hair shape, not hair count, photo or completion records',()=>{
  const state=new SalonVisit();assert.equal(state.selectTool('invalid'),false);state.selectTool('comb');const before=state.hair.map(h=>h.length);assert.equal(state.useAt(300,650,20),false);assert.ok(state.applyZone('left').length);assert.equal(state.comb,-1);assert.ok(state.applyZone('right').length);assert.equal(state.comb,1);
- state.selectTool('dryer');assert.ok(state.applyZone('fringe').length);assert.equal(state.blown,true);assert.deepEqual(state.applyZone('fringe'),[]);assert.deepEqual(state.hair.map(h=>h.length),before);assert.equal(state.canFinish,false);
+ state.selectTool('dryer');assert.ok(state.applyZone('fringe').length);assert.equal(state.blown,true);assert.ok(state.applyZone('fringe').length);assert.deepEqual(state.hair.map(h=>h.length),before);assert.equal(state.canFinish,false);
+});
+test('shampoo washes each region and drying stays optional, repeatable play',()=>{
+ const state=new SalonVisit();state.applyZone('fringe');state.selectTool('shampoo');assert.deepEqual(SALON_TOOLS,['scissors','comb','shampoo','dryer']);assert.deepEqual(state.applyZone('missing'),[]);
+ for(const zone of ['left','fringe','right'])assert.equal(state.applyZone(zone).length,1);assert.equal(state.washedCount,3);assert.equal(state.damp,true);assert.equal(state.blown,false);assert.equal(state.canFinish,true);assert.equal(state.applyZone('fringe').length,1);
+ state.selectTool('dryer');for(const zone of ['left','fringe','right'])assert.equal(state.applyZone(zone).length,1);assert.equal(state.damp,false);assert.equal(state.washedCount,3);assert.equal(state.blown,true);assert.equal(state.canFinish,true);assert.equal(state.applyZone('fringe').length,1);
+ state.reset();assert.equal(state.washedCount,0);assert.equal(state.damp,false);
+});
+test('wash tool and facial reaction layers are exposed as accessible local gameplay',()=>{
+ const html=salonHTML();assert.equal((html.match(/data-salon="tool"/g)||[]).length,4);assert.match(html,/洗頭/);assert.match(html,/salon-lather/);assert.match(html,/salon-expression/);
 });
 test('before comparison and resting reject changes and do not lose current style',()=>{
  const state=new SalonVisit();state.applyZone('left');const before=JSON.stringify(state.hair);state.compare();assert.equal(salonCue(state),SALON_CUES.before);assert.deepEqual(state.applyZone('right'),[]);assert.equal(state.selectTool('dryer'),false);assert.equal(state.finish(),false);state.compare();assert.equal(JSON.stringify(state.hair),before);
