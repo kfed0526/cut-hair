@@ -1,6 +1,6 @@
 # Nickson 的小小理髮店 · Cut Hair
 
-從 Panda School `20261021.v2` 複製的獨立剪髮遊戲。開啟就能幫 Nickson 剪頭髮，不需原專案、課本、小鎮地圖、帳號或網路語音服務，不受原理髮店營業時間限制。
+從 Panda School `20261021.v2` 複製的獨立剪髮遊戲。開啟後可幫 Nickson 剪頭髮，也可選貓咪、狗狗或猴子來剪毛，不需原專案、課本、小鎮地圖、帳號或網路語音服務，不受原理髮店營業時間限制。
 
 線上版本：<https://kfed0526.github.io/cut-hair/>
 
@@ -18,6 +18,7 @@ npm start
 ## 保留的玩法
 
 - 點頭髮／拖剪刀剪短；左邊、瀏海、右邊按鈕也能操作，支援鍵盤。
+- 可切換 Nickson、貓咪、狗狗與猴子；人物顯示「頭髮／剪髮」，動物顯示「毛髮／剪毛」，每位角色都有對位的長／短造型圖。
 - 梳頭、吹整、比較剪前後、完成造型、讓頭髮長回來。
 - 明顯虛構化的繪本動畫角色與配對短髮底圖、11段中文語音、剪髮音效、呼吸與落髮效果。
 - 家長可調語音／音效音量、1–5語速及動畫；設定使用獨立的 `cut-hair-settings`，不讀寫 Panda School。
@@ -37,6 +38,6 @@ node scripts/asset-manifest.mjs
 
 原遊戲核心是 salon.js、salon-model.js、salon-art.js、salon-voice.js、salon.css；speech.js／sounds.js沿用原共用音訊實作。app.js／settings.js／style.css為獨立入口與設定，server.mjs從自己的資料夾提供檔案。來源與差異見SOURCE.json，素材完整提示在assets/salon.prompts.json。
 
-公開版使用兩張V4繪本角色PNG來源與WebP，刻意簡化五官、膚質及髮絲以降低真人辨識度；V3衍生圖只留在本機並由`.gitignore`排除，提示則保留作來源紀錄，兩者都不進入瀏覽器資源清單。原始私人JPG、舊V1／V2圖片、其他場景、教材、相簿、瀏覽器紀錄與家長PIN均未複製。
+目前本機版使用四組、共八張對位的透明WebP；Nickson沿用V4虛構繪本造型，貓咪、狗狗與猴子是原創的非真人繪本角色。V3 Nickson 衍生圖只留在本機並由`.gitignore`排除，提示則保留作來源紀錄，兩者都不進入瀏覽器資源清單。原始私人JPG、舊V1／V2圖片、其他場景、教材、相簿、瀏覽器紀錄與家長PIN均未複製。
 
 原始碼公開於 <https://github.com/kfed0526/cut-hair>，GitHub Pages 從 `main` 分支根目錄發佈。

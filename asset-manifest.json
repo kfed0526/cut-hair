@@ -1,7 +1,7 @@
 {
   "name": "cut-hair",
   "version": "0.2.0",
-  "totalBytes": 2250589,
+  "totalBytes": 3499455,
   "files": [
     {
       "url": "app.js",
@@ -64,6 +64,36 @@
       "sha256": "311cfd6923619af31431a75aca28e0ef4380f5d4ac342b82d1a5cbeeb2d07a8c"
     },
     {
+      "url": "assets/characters/cat-salon-storybook-short.webp",
+      "bytes": 156728,
+      "sha256": "b32c67e03159e7b6fa822fd75432c9b84a299dca87c6e4e5a570ce5b7bedd53b"
+    },
+    {
+      "url": "assets/characters/cat-salon-storybook.webp",
+      "bytes": 162472,
+      "sha256": "8604a56ccfc92d39185bf9628f1915ea2ad38e7aa301bc2ce33d4c043200afad"
+    },
+    {
+      "url": "assets/characters/dog-salon-storybook-short.webp",
+      "bytes": 224016,
+      "sha256": "a9be4d1c284f83bda52cb6816c45f04329294a8e00b791771d02ee122f8e4686"
+    },
+    {
+      "url": "assets/characters/dog-salon-storybook.webp",
+      "bytes": 263814,
+      "sha256": "84047b51481a27e221863ec89bb596a7c735bae6180a0f265c9180958f676ee9"
+    },
+    {
+      "url": "assets/characters/monkey-salon-storybook-short.webp",
+      "bytes": 192002,
+      "sha256": "cfc6af6fb04ffbc364bc2253c2750da31766a97e4ad3fec7a2e869576318d46e"
+    },
+    {
+      "url": "assets/characters/monkey-salon-storybook.webp",
+      "bytes": 244944,
+      "sha256": "c769e894b4a6dbc9aec8487723039dcb19af451d38d0560ecbb50b625e4e5edb"
+    },
+    {
       "url": "assets/characters/nickson-salon-storybook-short-v4.webp",
       "bytes": 113084,
       "sha256": "3add41a690e43fb99015c9dc1692aaf937e92a489c64e0fe29010732d57dc603"
@@ -89,9 +119,14 @@
       "sha256": "d8f6b515fd98652da0e14f52d14383fc765b5b56efe8e206af7c7983d405180e"
     },
     {
+      "url": "salon-characters.js",
+      "bytes": 1529,
+      "sha256": "c869838390c8b8653cd56e8bbea30e404f810b1778deebd3fd6d37da03965cb1"
+    },
+    {
       "url": "salon-model.js",
-      "bytes": 5839,
-      "sha256": "bc577b29f98d9727efd18a6046b11e9934fe56de6c25a136ec7717c20ddccc08"
+      "bytes": 6177,
+      "sha256": "1ad573513d61a7000e7aa4ba516f230e6706908bedade3dcb03a159ad1bb11e5"
     },
     {
       "url": "salon-voice.js",
@@ -100,13 +135,13 @@
     },
     {
       "url": "salon.css",
-      "bytes": 13782,
-      "sha256": "70c2b67a70b3bc3fc217b0e2275e3f8f772e795b1148871fa3479660516fac69"
+      "bytes": 14654,
+      "sha256": "cc61f9c890b90f04949423ab1b605af774445814526a32f77995c3c776abbb06"
     },
     {
       "url": "salon.js",
-      "bytes": 19181,
-      "sha256": "a4286627ac665d4004d091bce322207f4f902bb456504ee5fcbd9304ea36ed38"
+      "bytes": 21332,
+      "sha256": "6c242cd6bef48e122cf00dc79faaaf41b3b72d5774755de8048284b4356481a4"
     },
     {
       "url": "settings.js",

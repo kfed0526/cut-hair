@@ -1,17 +1,18 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {SalonVisit,createHair,hairPoint,MIN_HAIR_LENGTH,SALON_STYLES,salonTaskForDate} from '../salon-model.js';
+import {SalonVisit,createHair,hairPoint,MIN_HAIR_LENGTH,SALON_STYLES,SALON_CHARACTER_IDS,salonTaskForDate} from '../salon-model.js';
 import {SalonSession,salonHTML,SALON_PORTRAIT,SALON_SHORT_PORTRAIT} from '../salon.js';
+import {SALON_CHARACTERS,salonCharacter,salonCharacterText} from '../salon-characters.js';
 import {SALON_CUES,salonVoiceTexts,salonCue} from '../salon-voice.js';
 import {drawSalonHair,drawHairMatte} from '../salon-art.js';
 function fixture(options={}){
  let key=0,visible=true,stops=0;const timers=new Map(),events=new Map(),photoEvents=new Map(),said=[],effects=[];
  const photo={complete:true,naturalWidth:900,addEventListener:(type,fn)=>photoEvents.set(type,fn),removeEventListener:type=>photoEvents.delete(type)};
- const cursor={hidden:true,style:{}},root={addEventListener:(type,fn)=>events.set(type,fn),removeEventListener:type=>events.delete(type),querySelector:s=>s==='.salon-photo'?photo:s==='.salon-short-photo'?options.shortImage||null:s==='.salon-cursor'?cursor:null};
+ const texture=options.textureImage||{complete:true,naturalWidth:900,addEventListener(){},removeEventListener(){}},cursor={hidden:true,style:{}},root={addEventListener:(type,fn)=>events.set(type,fn),removeEventListener:type=>events.delete(type),querySelector:s=>s==='.salon-photo'?photo:s==='.salon-short-photo'?options.shortImage||null:s==='.salon-texture'?texture:s==='.salon-cursor'?cursor:null};
  const session=new SalonSession({root,visible:()=>visible,schedule:(fn,ms)=>{timers.set(++key,{fn,ms});return key;},cancel:id=>timers.delete(id),say:async text=>{said.push(text);return true;},stopAudio:()=>stops++,effect:tool=>effects.push(tool),now:()=>1000,...options});
  session.paint=()=>{};session.paintHair=()=>{};session.photoReady=true;
- return {session,root,photo,cursor,timers,events,photoEvents,said,effects,stops:()=>stops,hide:()=>visible=false,show:()=>visible=true};
+ return {session,root,photo,texture,cursor,timers,events,photoEvents,said,effects,stops:()=>stops,hide:()=>visible=false,show:()=>visible=true};
 }
 test('salon starts with deterministic independent hair locks and no persisted progress',()=>{
  const a=new SalonVisit(),b=new SalonVisit();assert.equal(a.hair.length,50);assert.equal(new Set(a.hair.map(h=>h.id)).size,50);assert.deepEqual(a.hair,createHair());a.applyZone('fringe');assert.equal(b.trimmed,0);assert.equal(a.canFinish,true);assert.equal(a.tool,'scissors');assert.equal(a.done,false);
@@ -24,6 +25,21 @@ test('the daily salon task is stable for a local calendar day',()=>{
 test('finishing the matching preset completes the task without blocking free play',()=>{
  const state=new SalonVisit({taskStyle:'side-part'});state.applyStyle('blunt');assert.equal(state.taskReady,false);assert.equal(state.finish(),true);assert.equal(state.taskComplete,false);
  assert.equal(state.reset(),true);assert.equal(state.taskStyle,'side-part');state.applyStyle('side-part');assert.equal(state.taskReady,true);assert.equal(state.taskComplete,false);assert.equal(state.finish(),true);assert.equal(state.taskComplete,true);
+});
+test('choosing another salon character starts that character with fresh hair',()=>{
+ const state=new SalonVisit({character:'cat',taskStyle:'side-part'});assert.equal(state.character,'cat');state.applyStyle('blunt');
+ assert.equal(state.selectCharacter('dog'),true);assert.equal(state.character,'dog');assert.equal(state.trimmed,0);assert.equal(state.style,'');assert.equal(state.taskStyle,'side-part');
+ assert.deepEqual(SALON_CHARACTER_IDS,['nickson','cat','dog','monkey']);assert.equal(state.selectCharacter('dragon'),false);state.applyStyle('side-part');state.finish();assert.equal(state.selectCharacter('monkey'),false);
+});
+test('the salon character catalog provides four local aligned portrait pairs and animal grooming copy',()=>{
+ assert.deepEqual(SALON_CHARACTERS.map(character=>character.id),['nickson','cat','dog','monkey']);assert.equal(salonCharacter('missing').id,'nickson');
+ assert.equal(salonCharacterText('nickson','幫 Nickson 剪髮，讓頭髮變短。'),'幫 Nickson 剪髮，讓頭髮變短。');assert.equal(salonCharacterText('cat','幫 Nickson 剪髮，讓頭髮變短。'),'幫 貓咪 剪毛，讓毛髮變短。');
+ for(const character of SALON_CHARACTERS){assert.equal(salonCharacter(character.id),character);assert.ok(character.label);assert.ok(character.hairLabel);assert.ok(character.cutLabel);assert.ok(character.alt);for(const file of [character.portrait,character.shortPortrait]){assert.equal(fs.existsSync(file),true,file);const webp=fs.readFileSync(file);assert.equal(webp.toString('ascii',0,4),'RIFF');assert.equal(webp.toString('ascii',8,12),'WEBP');assert.ok(webp[20]&16,file);}}
+});
+test('four accessible character buttons switch the session portrait and reset the haircut',()=>{
+ const html=salonHTML();assert.equal((html.match(/data-salon="character"/g)||[]).length,4);for(const label of ['Nickson','貓咪','狗狗','猴子'])assert.match(html,new RegExp(label));
+ const shortImage={complete:true,naturalWidth:900,addEventListener(){},removeEventListener(){}},f=fixture({shortImage});f.session.mount();f.session.action('style','blunt');f.session.action('character','cat');
+ assert.equal(f.session.state.character,'cat');assert.equal(f.session.state.trimmed,0);assert.equal(f.photo.src,'assets/characters/cat-salon-storybook.webp');assert.equal(shortImage.src,'assets/characters/cat-salon-storybook-short.webp');assert.equal(f.texture.src,f.photo.src);assert.equal(f.session.message,'換貓咪來剪毛！');
 });
 test('only game hair hit regions can be cut; face, invalid inputs and oversized radius cannot affect it',()=>{
  const state=new SalonVisit(),before=JSON.stringify(state.hair);for(const [x,y] of [[300,440],[300,580],[NaN,100],[100,Infinity],[-1000,-1000]])assert.deepEqual(state.cutAt(x,y),[]);assert.equal(JSON.stringify(state.hair),before);
@@ -132,7 +148,12 @@ test('stylized salon variants retain source history, transparency and matching c
   assert.equal(png.readUInt8(25),6);assert.ok(encoded[20]&16);assert.ok(files.has(webp));assert.equal(files.has(pngPath),false);
   const asset=prompts.assets.find(a=>a.webp===webp);assert.ok(asset);assert.equal(asset.transparentBackground,true);assert.deepEqual(asset.webpSize,{width:900,height:1200});assert.match(asset.prompt,/fictional|虛構/i);
  }
- assert.equal(prompts.assets.filter(a=>a.webp.includes('storybook')).length,2);
+ for(const character of SALON_CHARACTERS){
+  for(const webp of [character.portrait,character.shortPortrait]){
+   const asset=prompts.assets.find(a=>a.webp===webp);assert.ok(asset,webp);assert.equal(asset.transparentBackground,true);assert.deepEqual(asset.webpSize,{width:900,height:1200});
+  }
+ }
+ assert.equal(prompts.assets.filter(a=>a.webp.includes('storybook')).length,8);
  assert.match(salonHTML(),/繪本動畫角色/);assert.doesNotMatch(salonHTML(),/本人的照片|依 Nickson 照片/);
 });
 

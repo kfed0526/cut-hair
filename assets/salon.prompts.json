@@ -2,7 +2,7 @@
   "sourceProject": "panda-school",
   "sourceCommit": "71c56caf661617d64d667550f26ec1df25dc4862",
   "copiedAt": "2026-10-21",
-  "note": "V4 storybook portraits are the current runtime pair. V3 derived portraits and prompts are retained locally for provenance; inputRole references are historical generation inputs, not runtime dependencies. Original private JPG and V1/V2 files are not included.",
+  "note": "The current runtime set contains four aligned storybook character pairs: Nickson, cat, dog and monkey. V3 Nickson portraits and prompts are retained locally for provenance; inputRole references are historical generation inputs, not runtime dependencies. Original private JPG and V1/V2 files are not included.",
   "assets": [
     {
       "useCase": "style-transfer / identity-preserve",
@@ -75,7 +75,67 @@
       "transparentBackground": true,
       "prompt": "Change only the hairstyle of the fictional illustrated character from the long bowl cut to a neat, very short brown crew cut. Preserve the illustrated face, expression, eye placement, head position and size, ears, neck, black dotted barber cape, crop, canvas placement, lighting, colors and transparent background as closely as possible for layered alignment. Keep the result unmistakably a fictional 2D picture-book character. No text, watermark, background or extra objects.",
       "notes": "Current V4 runtime short-hair portrait. Generated from the V4 long-hair portrait with the built-in ImageGen tool, then encoded as an aligned 900x1200 transparent WebP."
+    },
+    {
+      "useCase": "original-character-generation",
+      "inputRole": "Built-in ImageGen original generation; no private source image",
+      "webp": "assets/characters/cat-salon-storybook.webp",
+      "webpSize": {"width": 900, "height": 1200},
+      "bytes": 162472,
+      "transparentBackground": true,
+      "prompt": "Create one original anthropomorphic orange tabby cat salon guest in a warm children's picture-book 2D animation style. Centered front-facing three-quarter portrait on a transparent 3:4 canvas, wearing a black barber cape with small white dots. Give the cat a compact rounded chestnut-brown bowl-bob wig ending above the outer eye corners so the face remains clear. Friendly expression, simplified fictional features, soft cel shading and subtle brush texture. No text, watermark, background, tools, extra limbs, collage or photorealism.",
+      "notes": "Current runtime long-hair cat portrait. Generated with the built-in ImageGen tool, then cropped and encoded as an aligned 900x1200 transparent WebP."
+    },
+    {
+      "useCase": "precise-object-edit",
+      "inputRole": "Edit target and alignment reference: assets/characters/cat-salon-storybook.webp",
+      "webp": "assets/characters/cat-salon-storybook-short.webp",
+      "webpSize": {"width": 900, "height": 1200},
+      "bytes": 156728,
+      "transparentBackground": true,
+      "prompt": "Change only the brown wig of the exact illustrated orange tabby cat into a neat close-cropped chestnut hairstyle. Preserve the cat's identity, face, expression, ears, pose, scale, black dotted barber cape, crop, colors, lighting and transparent background for exact game-layer alignment. Keep the result fictional and storybook-like. No text, watermark, background or extra objects.",
+      "notes": "Current runtime short-hair cat portrait. Edited from the cat long-hair anchor with the built-in ImageGen tool, then cropped and encoded as an aligned 900x1200 transparent WebP."
+    },
+    {
+      "useCase": "original-character-generation",
+      "inputRole": "Built-in ImageGen original generation; no private source image",
+      "webp": "assets/characters/dog-salon-storybook.webp",
+      "webpSize": {"width": 900, "height": 1200},
+      "bytes": 263814,
+      "transparentBackground": true,
+      "prompt": "Create one original anthropomorphic golden-brown floppy-eared dog salon guest in a warm children's picture-book 2D animation style. Centered front-facing three-quarter portrait on a transparent 3:4 canvas, wearing a black barber cape with small white dots. Add a compact rounded chestnut-brown bowl-bob wig ending above the eye line. Friendly expression, simplified fictional features, soft cel shading and subtle brush texture. No text, watermark, background, tools, extra limbs, collage or photorealism.",
+      "notes": "Current runtime long-hair dog portrait. Generated with the built-in ImageGen tool, then cropped and encoded as an aligned 900x1200 transparent WebP."
+    },
+    {
+      "useCase": "precise-object-edit",
+      "inputRole": "Edit target and alignment reference: assets/characters/dog-salon-storybook.webp",
+      "webp": "assets/characters/dog-salon-storybook-short.webp",
+      "webpSize": {"width": 900, "height": 1200},
+      "bytes": 224016,
+      "transparentBackground": true,
+      "prompt": "Change only the brown wig of the exact illustrated golden floppy-eared dog into a neat close-cropped chestnut hairstyle. Preserve the dog's identity, face, expression, ears, pose, scale, black dotted barber cape, crop, colors, lighting and transparent background for exact game-layer alignment. Keep the result fictional and storybook-like. No text, watermark, background or extra objects.",
+      "notes": "Current runtime short-hair dog portrait. Edited from the dog long-hair anchor with the built-in ImageGen tool, then cropped and encoded as an aligned 900x1200 transparent WebP."
+    },
+    {
+      "useCase": "original-character-generation",
+      "inputRole": "Built-in ImageGen original generation; no private source image",
+      "webp": "assets/characters/monkey-salon-storybook.webp",
+      "webpSize": {"width": 900, "height": 1200},
+      "bytes": 244944,
+      "transparentBackground": true,
+      "prompt": "Create one original anthropomorphic tan-and-brown monkey salon guest in a warm children's picture-book 2D animation style. Centered front-facing three-quarter portrait on a transparent 3:4 canvas, wearing a black barber cape with small white dots. Add a compact rounded chestnut-brown bowl-bob wig ending above the eye line. Friendly expression, simplified fictional features, soft cel shading and subtle brush texture. No text, watermark, background, tools, extra limbs, collage or photorealism.",
+      "notes": "Current runtime long-hair monkey portrait. Generated with the built-in ImageGen tool, then cropped and encoded as an aligned 900x1200 transparent WebP."
+    },
+    {
+      "useCase": "precise-object-edit",
+      "inputRole": "Edit target and alignment reference: assets/characters/monkey-salon-storybook.webp",
+      "webp": "assets/characters/monkey-salon-storybook-short.webp",
+      "webpSize": {"width": 900, "height": 1200},
+      "bytes": 192002,
+      "transparentBackground": true,
+      "prompt": "Change only the brown wig of the exact illustrated tan-and-brown monkey into a neat close-cropped chestnut hairstyle. Preserve the monkey's identity, face, expression, ears, pose, scale, black dotted barber cape, crop, colors, lighting and transparent background for exact game-layer alignment. Keep the result fictional and storybook-like. No text, watermark, background or extra objects.",
+      "notes": "Current runtime short-hair monkey portrait. Edited from the monkey long-hair anchor with the built-in ImageGen tool, then cropped and encoded as an aligned 900x1200 transparent WebP."
     }
   ],
-  "rendering": "V4 uses a deliberately fictionalized storybook character with simplified features and reduced photographic likeness. Both current long and short styles use aligned 900x1200 transparent WebP assets. V3 remains only as local provenance; continuous hair matte, cutting, breathing and scissors remain unchanged. No generation at runtime."
+  "rendering": "All four selectable characters use deliberately fictionalized storybook artwork. Every long/short pair is an aligned 900x1200 transparent WebP. V3 Nickson remains only as local provenance; continuous hair matte, cutting, breathing and scissors remain unchanged. No generation at runtime."
 }

@@ -3,6 +3,7 @@ export const SALON_SIZE={width:600,height:800};
 export const SALON_TOOLS=['scissors','comb','dryer'];
 export const SALON_ZONES=['left','fringe','right'];
 export const SALON_STYLES=['blunt','side-part','asymmetric','fluffy-short'];
+export const SALON_CHARACTER_IDS=['nickson','cat','dog','monkey'];
 export const SALON_TASKS=[
  {style:'blunt',title:'整齊瀏海',prompt:'幫 Nickson 修出整整齊齊的瀏海。',badge:'瀏海小高手'},
  {style:'side-part',title:'俐落側分',prompt:'幫 Nickson 梳出有方向的側分造型。',badge:'側分小達人'},
@@ -43,12 +44,13 @@ export function nearestHairPoint(lock,x,y,state={}){
  return closest;
 }
 export class SalonVisit{
- constructor({taskStyle=''}={}){this.taskStyle=SALON_STYLES.includes(taskStyle)?taskStyle:'';this.reset();}
+ constructor({taskStyle='',character='nickson'}={}){this.taskStyle=SALON_STYLES.includes(taskStyle)?taskStyle:'';this.character=SALON_CHARACTER_IDS.includes(character)?character:'nickson';this.reset();}
  get trimmed(){return this.hair.filter(lock=>lock.length<1).length;}
  get canFinish(){return this.trimmed>0&&!this.paused&&!this.before&&!this.done;}
  get editable(){return !this.paused&&!this.before&&!this.done;}
  get taskReady(){return Boolean(this.taskStyle)&&this.style===this.taskStyle&&!this.done;}
  get taskComplete(){return Boolean(this.taskStyle)&&this.style===this.taskStyle&&this.done;}
+ selectCharacter(character){if(!this.editable||!SALON_CHARACTER_IDS.includes(character)||this.character===character)return false;this.character=character;return this.reset();}
  reset(){if(this.paused)return false;this.hair=createHair();this.tool='scissors';this.style='';this.comb=0;this.blown=false;this.done=false;this.before=false;this.paused=false;return true;}
  selectTool(tool){if(!this.editable||!SALON_TOOLS.includes(tool)||this.tool===tool)return false;this.tool=tool;return true;}
  cutAt(x,y,radius=23){
