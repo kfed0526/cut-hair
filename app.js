@@ -1,9 +1,9 @@
-import {SalonVisit,SalonSession,salonHTML} from './salon.js';
+import {SalonVisit,SalonSession,salonHTML,salonTaskForDate} from './salon.js';
 import {LessonSpeech} from './speech.js';
 import {GameSounds} from './sounds.js';
 import {readSettings,writeSettings,normalizeSettings} from './settings.js';
 
-const root=document.querySelector('#game'),start=document.querySelector('#start'),welcome=document.querySelector('#welcome'),state=new SalonVisit();
+const root=document.querySelector('#game'),start=document.querySelector('#start'),welcome=document.querySelector('#welcome'),task=salonTaskForDate(),state=new SalonVisit({taskStyle:task.style});
 let storage;try{storage=window.localStorage;}catch{/* A private browser can still play without saved settings. */}
 let settings=readSettings(storage),session=null,started=false,audio={};
 const speech=new LessonSpeech({synth:window.speechSynthesis,Utterance:window.SpeechSynthesisUtterance,Audio:window.Audio}),sounds=new GameSounds(),motion=window.matchMedia('(prefers-reduced-motion: reduce)');

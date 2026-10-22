@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {SalonVisit,createHair,hairPoint,MIN_HAIR_LENGTH,SALON_STYLES} from '../salon-model.js';
+import {SalonVisit,createHair,hairPoint,MIN_HAIR_LENGTH,SALON_STYLES,salonTaskForDate} from '../salon-model.js';
 import {SalonSession,salonHTML,SALON_PORTRAIT,SALON_SHORT_PORTRAIT} from '../salon.js';
 import {SALON_CUES,salonVoiceTexts,salonCue} from '../salon-voice.js';
 import {drawSalonHair,drawHairMatte} from '../salon-art.js';
@@ -15,6 +15,15 @@ function fixture(options={}){
 }
 test('salon starts with deterministic independent hair locks and no persisted progress',()=>{
  const a=new SalonVisit(),b=new SalonVisit();assert.equal(a.hair.length,50);assert.equal(new Set(a.hair.map(h=>h.id)).size,50);assert.deepEqual(a.hair,createHair());a.applyZone('fringe');assert.equal(b.trimmed,0);assert.equal(a.canFinish,true);assert.equal(a.tool,'scissors');assert.equal(a.done,false);
+});
+test('the daily salon task is stable for a local calendar day',()=>{
+ assert.deepEqual(salonTaskForDate(new Date(2026,9,22)),{style:'side-part',title:'俐落側分',prompt:'幫 Nickson 梳出有方向的側分造型。',badge:'側分小達人'});
+ assert.equal(salonTaskForDate(new Date(2026,9,22)).style,'side-part');
+ assert.equal(salonTaskForDate(new Date(2026,9,23)).style,'asymmetric');
+});
+test('finishing the matching preset completes the task without blocking free play',()=>{
+ const state=new SalonVisit({taskStyle:'side-part'});state.applyStyle('blunt');assert.equal(state.taskReady,false);assert.equal(state.finish(),true);assert.equal(state.taskComplete,false);
+ assert.equal(state.reset(),true);assert.equal(state.taskStyle,'side-part');state.applyStyle('side-part');assert.equal(state.taskReady,true);assert.equal(state.taskComplete,false);assert.equal(state.finish(),true);assert.equal(state.taskComplete,true);
 });
 test('only game hair hit regions can be cut; face, invalid inputs and oversized radius cannot affect it',()=>{
  const state=new SalonVisit(),before=JSON.stringify(state.hair);for(const [x,y] of [[300,440],[300,580],[NaN,100],[100,Infinity],[-1000,-1000]])assert.deepEqual(state.cutAt(x,y),[]);assert.equal(JSON.stringify(state.hair),before);
@@ -61,6 +70,11 @@ test('four accessible style cards apply a preset through the salon session',()=>
  for(const label of ['齊瀏海','側分','不對稱','蓬鬆短髮'])assert.match(html,new RegExp(label));
  const f=fixture({reducedMotion:true});f.session.action('style','blunt');
  assert.equal(f.session.state.style,'blunt');assert.equal(f.session.state.canFinish,true);assert.equal(f.effects.at(-1),'scissors');
+});
+test('the salon session presents and rewards the daily task',()=>{
+ const html=salonHTML();assert.match(html,/data-salon-task/);assert.match(html,/今日任務/);assert.match(html,/aria-live="polite"/);
+ const f=fixture({state:new SalonVisit({taskStyle:'side-part'}),reducedMotion:true});f.session.action('style','side-part');assert.equal(f.session.state.taskReady,true);f.session.action('finish');
+ assert.equal(f.session.state.taskComplete,true);assert.equal(f.session.message,'任務完成！得到「側分小達人」徽章。');assert.equal(f.effects.at(-1),'finish');
 });
 test('reapplying a preset repaints when only its styling state needs restoring',()=>{
  const f=fixture({reducedMotion:true});let paints=0;f.session.paint=()=>paints++;

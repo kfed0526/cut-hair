@@ -3,7 +3,17 @@ export const SALON_SIZE={width:600,height:800};
 export const SALON_TOOLS=['scissors','comb','dryer'];
 export const SALON_ZONES=['left','fringe','right'];
 export const SALON_STYLES=['blunt','side-part','asymmetric','fluffy-short'];
+export const SALON_TASKS=[
+ {style:'blunt',title:'整齊瀏海',prompt:'幫 Nickson 修出整整齊齊的瀏海。',badge:'瀏海小高手'},
+ {style:'side-part',title:'俐落側分',prompt:'幫 Nickson 梳出有方向的側分造型。',badge:'側分小達人'},
+ {style:'asymmetric',title:'創意不對稱',prompt:'讓左右兩邊呈現有趣的長短變化。',badge:'創意設計師'},
+ {style:'fluffy-short',title:'蓬鬆短髮',prompt:'剪短頭髮，再吹出輕輕蓬鬆的感覺。',badge:'蓬鬆魔法師'}
+];
 export const MIN_HAIR_LENGTH=.28;
+export function salonTaskForDate(date=new Date()){
+ const day=date instanceof Date&&!Number.isNaN(date.valueOf())?date:new Date(),index=(day.getFullYear()*372+day.getMonth()*31+day.getDate())%SALON_TASKS.length;
+ return {...SALON_TASKS[index]};
+}
 function styleLength(style,lock,index,total){
  if(style==='blunt')return lock.zone==='fringe'?.62:.58;
  if(style==='side-part')return lock.zone==='fringe'?Math.round((.42+.36*index/(total-1))*1000)/1000:lock.zone==='left'?.42:.58;
@@ -33,10 +43,12 @@ export function nearestHairPoint(lock,x,y,state={}){
  return closest;
 }
 export class SalonVisit{
- constructor(){this.reset();}
+ constructor({taskStyle=''}={}){this.taskStyle=SALON_STYLES.includes(taskStyle)?taskStyle:'';this.reset();}
  get trimmed(){return this.hair.filter(lock=>lock.length<1).length;}
  get canFinish(){return this.trimmed>0&&!this.paused&&!this.before&&!this.done;}
  get editable(){return !this.paused&&!this.before&&!this.done;}
+ get taskReady(){return Boolean(this.taskStyle)&&this.style===this.taskStyle&&!this.done;}
+ get taskComplete(){return Boolean(this.taskStyle)&&this.style===this.taskStyle&&this.done;}
  reset(){if(this.paused)return false;this.hair=createHair();this.tool='scissors';this.style='';this.comb=0;this.blown=false;this.done=false;this.before=false;this.paused=false;return true;}
  selectTool(tool){if(!this.editable||!SALON_TOOLS.includes(tool)||this.tool===tool)return false;this.tool=tool;return true;}
  cutAt(x,y,radius=23){

@@ -1,12 +1,12 @@
 {
   "name": "cut-hair",
   "version": "0.2.0",
-  "totalBytes": 2246882,
+  "totalBytes": 2250589,
   "files": [
     {
       "url": "app.js",
-      "bytes": 3577,
-      "sha256": "0356274b18c8f31b65459b8f90a099c2af3c2aeb4693d594c61666fae36c7dc2"
+      "bytes": 3640,
+      "sha256": "6f5d848244a9b621e9cefd8dc2898345b0bbffcb8258d7a3cccb64aa50f1cbfe"
     },
     {
       "url": "assets/audio/salon/2588d1619bd68e1a.wav",
@@ -90,8 +90,8 @@
     },
     {
       "url": "salon-model.js",
-      "bytes": 4810,
-      "sha256": "c05851a19896969e7fedea779f7d0b544c458b8dc08393709693a23007f868f8"
+      "bytes": 5839,
+      "sha256": "bc577b29f98d9727efd18a6046b11e9934fe56de6c25a136ec7717c20ddccc08"
     },
     {
       "url": "salon-voice.js",
@@ -100,13 +100,13 @@
     },
     {
       "url": "salon.css",
-      "bytes": 12312,
-      "sha256": "5c1e3050c3827ea647fc52360ec8682f821734c3c1bf5ccab21d58d6960fe18b"
+      "bytes": 13782,
+      "sha256": "70c2b67a70b3bc3fc217b0e2275e3f8f772e795b1148871fa3479660516fac69"
     },
     {
       "url": "salon.js",
-      "bytes": 18036,
-      "sha256": "13c074c8018b434f85d98d0bf4240f582f35f8d116d509e8a5f1978518cbaa08"
+      "bytes": 19181,
+      "sha256": "a4286627ac665d4004d091bce322207f4f902bb456504ee5fcbd9304ea36ed38"
     },
     {
       "url": "settings.js",
