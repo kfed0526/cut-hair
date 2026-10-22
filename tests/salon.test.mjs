@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {SalonVisit,createHair,hairPoint,MIN_HAIR_LENGTH} from '../salon-model.js';
+import {SalonVisit,createHair,hairPoint,MIN_HAIR_LENGTH,SALON_STYLES} from '../salon-model.js';
 import {SalonSession,salonHTML,SALON_PORTRAIT,SALON_SHORT_PORTRAIT} from '../salon.js';
 import {SALON_CUES,salonVoiceTexts,salonCue} from '../salon-voice.js';
 import {drawSalonHair,drawHairMatte} from '../salon-art.js';
@@ -23,6 +23,50 @@ test('only game hair hit regions can be cut; face, invalid inputs and oversized 
 test('repeated zone cutting is bounded and completed style cannot be modified until growth reset',()=>{
  const state=new SalonVisit();assert.equal(state.finish(),false);assert.deepEqual(state.applyZone('constructor'),[]);for(let n=0;n<20;n++)state.applyZone('fringe');assert.ok(state.hair.filter(h=>h.zone==='fringe').every(h=>h.length===MIN_HAIR_LENGTH));assert.deepEqual(state.applyZone('fringe'),[]);
  assert.equal(state.finish(),true);assert.equal(state.finish(),false);assert.deepEqual(state.applyZone('left'),[]);assert.equal(state.selectTool('comb'),false);assert.equal(state.reset(),true);assert.deepEqual(state.hair,createHair());assert.equal(state.done,false);
+});
+test('blunt fringe preset creates an even, finishable haircut',()=>{
+ const state=new SalonVisit(),changed=state.applyStyle('blunt');
+ assert.deepEqual(SALON_STYLES,['blunt','side-part','asymmetric','fluffy-short']);
+ assert.equal(changed.length,50);assert.equal(state.style,'blunt');assert.equal(state.canFinish,true);
+ assert.deepEqual([...new Set(state.hair.filter(h=>h.zone==='fringe').map(h=>h.length))],[.62]);
+ assert.equal(state.comb,0);assert.equal(state.blown,false);
+});
+test('side part preset sweeps a graduated fringe to one side',()=>{
+ const state=new SalonVisit();state.applyStyle('side-part');const fringe=state.hair.filter(h=>h.zone==='fringe');
+ assert.equal(state.style,'side-part');assert.equal(state.comb,1);assert.equal(state.blown,false);
+ assert.equal(fringe[0].length,.42);assert.equal(fringe.at(-1).length,.78);assert.ok(fringe.every((lock,index)=>!index||lock.length>=fringe[index-1].length));
+});
+test('asymmetric preset leaves the right side visibly longer than the left',()=>{
+ const state=new SalonVisit();state.applyStyle('asymmetric');const left=state.hair.filter(h=>h.zone==='left'),right=state.hair.filter(h=>h.zone==='right');
+ assert.equal(state.style,'asymmetric');assert.ok(left.every(lock=>lock.length===.34));assert.ok(right.every(lock=>lock.length===.78));
+ assert.equal(state.comb,1);assert.equal(state.blown,false);
+});
+test('fluffy short preset trims every zone and applies blow-dried volume',()=>{
+ const state=new SalonVisit();state.applyStyle('fluffy-short');
+ assert.equal(state.style,'fluffy-short');assert.equal(state.comb,0);assert.equal(state.blown,true);
+ assert.ok(state.hair.filter(h=>h.zone==='fringe').every(lock=>lock.length===.44));
+ assert.ok(state.hair.filter(h=>h.zone!=='fringe').every(lock=>lock.length===.38));
+});
+test('style presets respect completed and paused states, while growth clears the selection',()=>{
+ const state=new SalonVisit();state.applyStyle('blunt');state.finish();const finished=JSON.stringify(state.hair);
+ assert.deepEqual(state.applyStyle('side-part'),[]);assert.equal(JSON.stringify(state.hair),finished);assert.equal(state.style,'blunt');
+ state.reset();assert.equal(state.style,'');state.paused=true;assert.deepEqual(state.applyStyle('fluffy-short'),[]);assert.equal(state.trimmed,0);
+});
+test('manual scissors and tool adjustments clear the selected preset',()=>{
+ const state=new SalonVisit();state.applyStyle('blunt');state.applyZone('left');assert.equal(state.style,'');
+ state.applyStyle('side-part');state.selectTool('comb');state.applyZone('left');assert.equal(state.style,'');
+});
+test('four accessible style cards apply a preset through the salon session',()=>{
+ const html=salonHTML();assert.equal((html.match(/data-salon="style"/g)||[]).length,4);
+ for(const label of ['齊瀏海','側分','不對稱','蓬鬆短髮'])assert.match(html,new RegExp(label));
+ const f=fixture({reducedMotion:true});f.session.action('style','blunt');
+ assert.equal(f.session.state.style,'blunt');assert.equal(f.session.state.canFinish,true);assert.equal(f.effects.at(-1),'scissors');
+});
+test('reapplying a preset repaints when only its styling state needs restoring',()=>{
+ const f=fixture({reducedMotion:true});let paints=0;f.session.paint=()=>paints++;
+ f.session.action('style','blunt');f.session.action('tool','comb');f.session.action('zone','left');
+ assert.equal(f.session.state.style,'');assert.equal(f.session.state.comb,-1);paints=0;
+ f.session.action('style','blunt');assert.equal(f.session.state.style,'blunt');assert.equal(f.session.state.comb,0);assert.equal(paints,1);
 });
 test('comb and dryer affect hair shape, not hair count, photo or completion records',()=>{
  const state=new SalonVisit();assert.equal(state.selectTool('invalid'),false);state.selectTool('comb');const before=state.hair.map(h=>h.length);assert.equal(state.useAt(300,650,20),false);assert.ok(state.applyZone('left').length);assert.equal(state.comb,-1);assert.ok(state.applyZone('right').length);assert.equal(state.comb,1);
