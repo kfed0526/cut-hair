@@ -5,3 +5,6 @@ for(const file of fs.readdirSync(root).filter(f=>f.endsWith('.js'))){const code=
 const mapping=JSON.parse(fs.readFileSync(path.join(root,'content/salon-audio.json'))).audio;assert.equal(Object.keys(mapping).length,11);for(const clip of Object.values(mapping))assert.ok(manifest.files.some(f=>f.url===clip));
 for(const file of ['AGENTS.md','README.md','START_HERE.md','DEVELOPMENT_STATUS.md','VALIDATION.md','SOURCE.json','server.mjs'])assert.ok(fs.existsSync(path.join(root,file)),file);
 console.log(`OK cut-hair: ${manifest.files.length} verified local browser assets; 11 WAV clips; no Panda School runtime dependency.`);
+const template=fs.readFileSync(path.join(root,'scripts/sw-template.txt'),'utf8');
+const version=createHash('sha256').update(JSON.stringify(manifest.files)+template).digest('hex').slice(0,20);
+assert.equal(fs.readFileSync(path.join(root,'sw.js'),'utf8'),template.replace('__VERSION__',JSON.stringify(version)).replace('__FILES__',JSON.stringify(manifest.files.map(file=>file.url))),'Regenerate offline worker with node scripts/asset-manifest.mjs');

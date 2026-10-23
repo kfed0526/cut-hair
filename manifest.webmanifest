@@ -1,0 +1,15 @@
+{
+  "id": "./",
+  "name": "Nickson 的小小理髮店",
+  "short_name": "小小理髮店",
+  "lang": "zh-Hant",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fcf7ed",
+  "theme_color": "#fcf7ed",
+  "icons": [
+    {"src": "assets/icons/salon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "assets/icons/salon-512.png", "sizes": "512x512", "type": "image/png"}
+  ]
+}

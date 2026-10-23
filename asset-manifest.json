@@ -1,12 +1,12 @@
 {
   "name": "cut-hair",
   "version": "0.2.0",
-  "totalBytes": 3505496,
+  "totalBytes": 3536406,
   "files": [
     {
       "url": "app.js",
-      "bytes": 3640,
-      "sha256": "6f5d848244a9b621e9cefd8dc2898345b0bbffcb8258d7a3cccb64aa50f1cbfe"
+      "bytes": 3670,
+      "sha256": "2634e42ddcaeabeb6a37eef91598589a2ef10c0666210b5ef95f85c76494774a"
     },
     {
       "url": "assets/audio/salon/2588d1619bd68e1a.wav",
@@ -104,14 +104,39 @@
       "sha256": "1f7ee4de961800b3b5350aa5d8dc514f157e8ff2b6f64c95346f16d745967944"
     },
     {
+      "url": "assets/icons/salon-180.png",
+      "bytes": 4549,
+      "sha256": "b4f8abfcebf04a22778144cbad052746fb371c5fd8e6f54a4f3fb77ef747fa12"
+    },
+    {
+      "url": "assets/icons/salon-192.png",
+      "bytes": 4585,
+      "sha256": "6847172b396997f4b73b77a9e91bed151ad714fb4993ef281eb5ad79ac353603"
+    },
+    {
+      "url": "assets/icons/salon-512.png",
+      "bytes": 17151,
+      "sha256": "30d0ec74ffb9ac445d906fca499f7794160ec32ef40f89a8e9e3e3ecdbf1f2b2"
+    },
+    {
       "url": "content/salon-audio.json",
       "bytes": 1124,
       "sha256": "d645320203fbab9b86c2f7a37fc58d42422d715285b78fe274a14fa62efb8b27"
     },
     {
       "url": "index.html",
-      "bytes": 2410,
-      "sha256": "45c6deb22b712980ec759f873a753683b1e3450cd5dc33fb895263065dfe90b0"
+      "bytes": 3567,
+      "sha256": "44ef1f294a29d4a4abb8b0e089f9017d401b1cbc11ecc3c728b0e90388383112"
+    },
+    {
+      "url": "manifest.webmanifest",
+      "bytes": 424,
+      "sha256": "049e4df6964bff847066b1ffbe268befc17d05a286028bc093ec0ff3b7ebbb31"
+    },
+    {
+      "url": "offline.js",
+      "bytes": 2734,
+      "sha256": "5f5b1ecc4d84c9e2716e99395fcd13515631c2f37282418ec916286046304712"
     },
     {
       "url": "salon-art.js",
@@ -160,8 +185,8 @@
     },
     {
       "url": "style.css",
-      "bytes": 2650,
-      "sha256": "c81f5dca3b3fa82bf2b23b2c78d1a35ab99b6888ba94dada6e66896df42cab6a"
+      "bytes": 2930,
+      "sha256": "bd1774b5c237c0f09d4a16f1a2224d93fc5bcf4deb3ffbb746b25350821dc394"
     }
   ]
 }

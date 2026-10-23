@@ -4,6 +4,19 @@
 
 線上版本：<https://kfed0526.github.io/cut-hair/>
 
+## iPad 離線玩
+
+本版支援加入主畫面的離線遊戲：
+
+1. 在 iPad 用 Safari 開啟網站，保持連網，等待「✓ 離線準備完成」。全部角色、程式和 11 段語音約 3.4 MB，下載失敗可按「重試離線下載」。
+2. 按 Safari「分享」→「加入主畫面」。
+3. 從主畫面的「小小理髮店」開啟，保持連網直到這裡也顯示「離線準備完成」。
+4. 開飛航模式，關掉遊戲再從主畫面重開，確認可以開始、換角色及聽語音。此後無需電腦或本機伺服器。
+
+首次下載需要連網；清除網站資料或裝置回收儲存空間後需要重新下載。造型不會跨次保存，家長設定仍保存在這個遊戲。新版先在背景下載，關閉所有遊戲視窗後再開啟才套用，不會在剪髮中強制更新。
+
+一般區域網路 `http://電腦IP:4176` 可測試畫面，但不符合離線安裝所需的安全連線；正式在 iPad 使用請透過 HTTPS 網站。電腦開發可用 `http://localhost:4176/`。
+
 ## 開始玩
 
 需要 Node.js 20 以上，不需 `npm install`。
@@ -35,7 +48,9 @@ npm run check
 node scripts/asset-manifest.mjs
 ```
 
-最後一行只在改動程式／圖片／語音後重建資源完整性清單，不升版或發布。`asset-manifest.json`不是 Service Worker 快取；此版仍需本機 HTTP 伺服器，沒有承諾關閉伺服器後仍能開網頁。
+最後一行在改動程式／圖片／語音後，同時重建資源完整性清單與 `sw.js`。`asset-manifest.json`本身不是快取；產生的 Service Worker 會完整下載清單內的資源，成功後才提供離線遊玩。清單或快取程式改變會自動產生新的快取版本，不升版或發布。
+
+開發用瀏覽器回歸：`node scripts/browser-smoke.mjs <Playwright的node_modules路徑>`。離線回歸：`node scripts/offline-smoke.mjs <Playwright的node_modules路徑>`，涵蓋根目錄／`/cut-hair/`、斷網重新開啟、伺服器不可用、所有角色／語音、音訊分段請求、下載失敗重試及更新等待。Playwright 只供開發驗證，遊戲不需要安裝套件。
 
 原遊戲核心是 salon.js、salon-model.js、salon-art.js、salon-voice.js、salon.css；speech.js／sounds.js沿用原共用音訊實作。app.js／settings.js／style.css為獨立入口與設定，server.mjs從自己的資料夾提供檔案。來源與差異見SOURCE.json，素材完整提示在assets/salon.prompts.json。
 
